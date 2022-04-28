@@ -19,7 +19,7 @@ class PostController extends Controller
     {
         $data = [
             'success' => true,
-            'posts' => Post::where('id', '>', -1)
+            'posts' => Post::with(['categorie', 'utilisateur'])->where('id', '>', -1)
             ->orderBy('created_at', 'desc')->get()
         ];
 
@@ -77,7 +77,7 @@ class PostController extends Controller
     {
         $data = [
             'success' => true,
-            'post' => $post
+            'post' => Post::where('id', $post->id)->with(['categorie', 'utilisateur'])
         ];
 
         return response()->json($data);
