@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/consomer-ivoirien/public/static/css/main.b8327ead.css",
+    "main.js": "/consomer-ivoirien/public/static/js/main.3f9047fd.js",
+    "static/js/787.8002d7d3.chunk.js": "/consomer-ivoirien/public/static/js/787.8002d7d3.chunk.js",
+    "index.html": "/consomer-ivoirien/public/index.html",
+    "main.b8327ead.css.map": "/consomer-ivoirien/public/static/css/main.b8327ead.css.map",
+    "main.3f9047fd.js.map": "/consomer-ivoirien/public/static/js/main.3f9047fd.js.map",
+    "787.8002d7d3.chunk.js.map": "/consomer-ivoirien/public/static/js/787.8002d7d3.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b8327ead.css",
+    "static/js/main.3f9047fd.js"
+  ]
+}

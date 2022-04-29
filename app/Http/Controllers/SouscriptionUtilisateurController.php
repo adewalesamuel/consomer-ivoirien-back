@@ -19,8 +19,10 @@ class SouscriptionUtilisateurController extends Controller
     {
         $data = [
             'success' => true,
-            'souscription_utilisateurs' => SouscriptionUtilisateur::where('id', '>', -1)
-            ->orderBy('created_at', 'desc')->get()
+            'souscription_utilisateurs' => SouscriptionUtilisateur::with(
+                ['souscription', 
+                'utilisateur'])->where('id', '>', -1)
+                ->orderBy('created_at', 'desc')->get()
         ];
 
         return response()->json($data);

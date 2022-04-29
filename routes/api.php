@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UtilisateurController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdministrateurController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\PromotionController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PubliciteController;
 use App\Http\Controllers\SouscriptionController;
 use App\Http\Controllers\SouscriptionUtilisateurController;
+use App\Http\Controllers\FileUploadController;
 
 
 /*
@@ -24,11 +26,13 @@ use App\Http\Controllers\SouscriptionUtilisateurController;
 |
 */
 
-Route::get('utilisateurs', [UtilisateurController::class, 'index']);
-Route::post('utilisateurs', [UtilisateurController::class, 'store']);
+Route::get('home', [HomeController::class, 'index']);
 Route::get('utilisateurs/{utilisateur}', [UtilisateurController::class, 'show']);
 Route::put('utilisateurs/{utilisateur}', [UtilisateurController::class, 'update']);
 Route::delete('utilisateurs/{utilisateur}', [UtilisateurController::class, 'destroy']);
+Route::get('utilisateurs', [UtilisateurController::class, 'index']);
+Route::post('utilisateurs', [UtilisateurController::class, 'store']);
+Route::post('upload', [FileUploadController::class, 'store']);
 
 Route::get('administrateurs', [AdministrateurController::class, 'index']);
 Route::post('administrateurs', [AdministrateurController::class, 'store']);
@@ -72,10 +76,10 @@ Route::get('souscriptions/{souscription}', [SouscriptionController::class, 'show
 Route::put('souscriptions/{souscription}', [SouscriptionController::class, 'update']);
 Route::delete('souscriptions/{souscription}', [SouscriptionController::class, 'destroy']);
 
-Route::get('souscriptionutilisateurs', [SouscriptionUtilisateurController::class, 'index']);
-Route::post('souscriptionutilisateurs', [SouscriptionUtilisateurController::class, 'store']);
-Route::get('souscriptionutilisateurs/{souscriptionutilisateur}', [SouscriptionUtilisateurController::class, 'show']);
-Route::put('souscriptionutilisateurs/{souscriptionutilisateur}', [SouscriptionUtilisateurController::class, 'update']);
-Route::delete('souscriptionutilisateurs/{souscriptionutilisateur}', [SouscriptionUtilisateurController::class, 'destroy']);
+Route::get('souscription_utilisateurs', [SouscriptionUtilisateurController::class, 'index']);
+Route::post('souscription_utilisateurs', [SouscriptionUtilisateurController::class, 'store']);
+Route::get('souscription_utilisateurs/{souscription_utilisateur}', [SouscriptionUtilisateurController::class, 'show']);
+Route::put('souscription_utilisateurs/{souscription_utilisateur}', [SouscriptionUtilisateurController::class, 'update']);
+Route::delete('souscription_utilisateurs/{souscription_utilisateur}', [SouscriptionUtilisateurController::class, 'destroy']);
 
 

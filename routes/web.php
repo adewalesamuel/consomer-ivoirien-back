@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/admin{any}', function () {
+    return view('admin');
+})->where('any', '.*');    // Must be at the end
+
+Route::get('/{any}', function () {
+     return view('user');
+ })->where('any', '.*');    // Must be at the end
