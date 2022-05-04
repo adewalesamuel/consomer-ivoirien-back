@@ -77,7 +77,7 @@ class PostController extends Controller
     {
         $data = [
             'success' => true,
-            'post' => Post::where('id', $post->id)->with(['categorie', 'utilisateur'])
+            'post' => Post::where('id', $post->id)->with(['categorie', 'utilisateur'])->first()
         ];
 
         return response()->json($data);

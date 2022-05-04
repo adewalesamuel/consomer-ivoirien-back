@@ -28,7 +28,7 @@ use App\Http\Controllers\FileUploadController;
 
 Route::get('home', [HomeController::class, 'index']);
 Route::get('utilisateurs/{utilisateur}', [UtilisateurController::class, 'show']);
-Route::put('utilisateurs/{utilisateur}', [UtilisateurController::class, 'update']);
+Route::post('utilisateurs/{utilisateur}', [UtilisateurController::class, 'update']);
 Route::delete('utilisateurs/{utilisateur}', [UtilisateurController::class, 'destroy']);
 Route::get('utilisateurs', [UtilisateurController::class, 'index']);
 Route::post('utilisateurs', [UtilisateurController::class, 'store']);
@@ -43,7 +43,7 @@ Route::delete('administrateurs/{administrateur}', [AdministrateurController::cla
 Route::get('categories', [CategorieController::class, 'index']);
 Route::post('categories', [CategorieController::class, 'store']);
 Route::get('categories/{categorie}', [CategorieController::class, 'show']);
-Route::put('categories/{categorie}', [CategorieController::class, 'update']);
+Route::post('categories/{categorie}', [CategorieController::class, 'update']);
 Route::delete('categories/{categorie}', [CategorieController::class, 'destroy']);
 
 Route::get('promotions', [PromotionController::class, 'index']);
