@@ -9,14 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
-class ApiAdminAuthController extends Controller
+class ApiAuthController extends Controller
 {
     public function login(Request $request) {
         $credentials = $request->only("email", "password");
-        $utilisateur = Utilisateur::where('email', $credentials['email'])
-        ->where('password', $credentials['password']);
     
-        if (!$utilisateur->exists()) {
+        if (!Auth::guard('user')->once($credentials)) {
             $data = [
                 'error' => true,
                 'message' => "Mail ou mot de passe incorrect"
@@ -25,7 +23,7 @@ class ApiAdminAuthController extends Controller
             return response()->json($data, 404);
         }
 
-        $utilisateur = $utilisateur->first();
+        $utilisateur = Utilisateur::where('email', $credentials['email'])->first();
 
         $data = [
             "success" => true,

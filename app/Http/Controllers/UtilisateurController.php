@@ -55,6 +55,7 @@ class UtilisateurController extends Controller
 		$utilisateur->ville = $validated['ville'] ?? null;
 		$utilisateur->pays = $validated['pays'] ?? null;
 		$utilisateur->telephone = $validated['telephone'] ?? null;
+        $utilisateur->api_token = Str::random(60);
 		
         if ($utilisateur->status) $utilisateur->status = $validated['status'] ?? null;
         if ($request->hasFile('img'))

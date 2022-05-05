@@ -13,6 +13,8 @@ use App\Http\Controllers\PubliciteController;
 use App\Http\Controllers\SouscriptionController;
 use App\Http\Controllers\SouscriptionUtilisateurController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\ApiAdminAuthController;
+use App\Http\Controllers\ApiAuthController;
 
 
 /*
@@ -25,6 +27,10 @@ use App\Http\Controllers\FileUploadController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('admin-login', [ApiAdminAuthController::class, 'login']);
+Route::post('login', [ApiAuthController::class, 'login']);
+Route::post('logout', [ApiAuthController::class, 'logout']);
 
 Route::get('home', [HomeController::class, 'index']);
 Route::get('utilisateurs/{utilisateur}', [UtilisateurController::class, 'show']);

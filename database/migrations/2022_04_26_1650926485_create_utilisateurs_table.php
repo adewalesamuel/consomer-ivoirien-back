@@ -22,6 +22,7 @@ class CreateUtilisateursTable extends Migration
 			$table->string('ville')->nullable();
 			$table->string('pays')->nullable();
 			$table->string('telephone')->nullable();
+            $table->string('api_token')->unique()->nullable();
 			$table->string('img_url')->nullable();
 			$table->enum('status', ['valide','suspendu', 'en-attente'])->default('en-attente');
 			$table->timestamp('email_verified_at')->nullable();
