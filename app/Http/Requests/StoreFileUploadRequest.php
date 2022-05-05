@@ -24,7 +24,7 @@ class StoreFileUploadRequest extends FormRequest
     public function rules()
     {
         return [
-            'img' => 'required|file'
+            'img' => 'required|image'
         ];
     }
 }
