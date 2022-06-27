@@ -50,10 +50,13 @@ class SouscriptionController extends Controller
 
         $souscription->titre = $validated['titre'] ?? null;
 		$souscription->description = $validated['description'] ?? null;
-		$souscription->img_urls = $validated['img_urls'] ?? null;
 		$souscription->periode = $validated['periode'] ?? null;
 		$souscription->prix = $validated['prix'] ?? null;
 		$souscription->attributs = $validated['attributs'] ?? null;
+
+        if ($request->hasFile('img'))
+            $souscription->img_url =  str_replace('public', 'storage', $request->img->store('public'));        
+
 		
         $souscription->save();
 
@@ -105,10 +108,12 @@ class SouscriptionController extends Controller
 
         $souscription->titre = $validated['titre'] ?? null;
 		$souscription->description = $validated['description'] ?? null;
-		$souscription->img_urls = $validated['img_urls'] ?? null;
 		$souscription->periode = $validated['periode'] ?? null;
 		$souscription->prix = $validated['prix'] ?? null;
 		$souscription->attributs = $validated['attributs'] ?? null;
+
+        if ($request->hasFile('img'))
+            $souscription->img_url =  str_replace('public', 'storage', $request->img->store('public'));   
 		
         $souscription->save();
 
