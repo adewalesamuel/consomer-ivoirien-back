@@ -30,7 +30,7 @@ class StorePostRequest extends FormRequest
 			'prix' => 'required|integer',
 			'img_urls' => 'nullable|json',
 			'categorie_id' => 'required|integer|exists:categories,id',
-			'utilisateur_id' => 'required|integer|exists:utilisateurs,id',
+			'utilisateur_id' => 'nullable|integer|exists:utilisateurs,id',
 			'promotion_end_date' => 'nullable|date',
 			
         ];

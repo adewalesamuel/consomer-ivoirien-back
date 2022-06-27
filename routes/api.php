@@ -28,11 +28,22 @@ use App\Http\Controllers\ApiAuthController;
 |
 */
 
+Route::middleware('auth.api_token:user')->group(function () {
+    Route::prefix('utilisateur')->group(function () {
+
+        Route::post('posts', [UtilisateurController::class, 'storePost']);
+        Route::put('posts/{post}', [UtilisateurController::class, 'updatePost']);
+        Route::delete('posts/{post}', [UtilisateurController::class, 'destroyPost']);
+    });    
+});
+
 Route::post('admin-login', [ApiAdminAuthController::class, 'login']);
 Route::post('login', [ApiAuthController::class, 'login']);
 Route::post('logout', [ApiAuthController::class, 'logout']);
 
 Route::get('home', [HomeController::class, 'index']);
+
+Route::get('utilisateurs/{utilisateur}/posts', [UtilisateurController::class, 'posts']);
 Route::get('utilisateurs/{utilisateur}', [UtilisateurController::class, 'show']);
 Route::post('utilisateurs/{utilisateur}', [UtilisateurController::class, 'update']);
 Route::delete('utilisateurs/{utilisateur}', [UtilisateurController::class, 'destroy']);
@@ -49,6 +60,7 @@ Route::delete('administrateurs/{administrateur}', [AdministrateurController::cla
 Route::get('categories', [CategorieController::class, 'index']);
 Route::post('categories', [CategorieController::class, 'store']);
 Route::get('categories/{categorie}', [CategorieController::class, 'show']);
+Route::get('categories/{categorie}/posts', [CategorieController::class, 'posts']);
 Route::post('categories/{categorie}', [CategorieController::class, 'update']);
 Route::delete('categories/{categorie}', [CategorieController::class, 'destroy']);
 
@@ -79,7 +91,7 @@ Route::delete('publicites/{publicite}', [PubliciteController::class, 'destroy'])
 Route::get('souscriptions', [SouscriptionController::class, 'index']);
 Route::post('souscriptions', [SouscriptionController::class, 'store']);
 Route::get('souscriptions/{souscription}', [SouscriptionController::class, 'show']);
-Route::put('souscriptions/{souscription}', [SouscriptionController::class, 'update']);
+Route::post('souscriptions/{souscription}', [SouscriptionController::class, 'update']);
 Route::delete('souscriptions/{souscription}', [SouscriptionController::class, 'destroy']);
 
 Route::get('souscription_utilisateurs', [SouscriptionUtilisateurController::class, 'index']);

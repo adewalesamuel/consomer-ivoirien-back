@@ -26,10 +26,10 @@ class StoreSouscriptionRequest extends FormRequest
         return [
             'titre' => 'required|string|unique:souscriptions',
 			'description' => 'nullable|string',
-			'img_urls' => 'nullable|json',
 			'periode' => 'required|integer',
 			'prix' => 'required|integer',
 			'attributs' => 'nullable|json',
+            'img' => 'nullable|image'
 			
         ];
     }

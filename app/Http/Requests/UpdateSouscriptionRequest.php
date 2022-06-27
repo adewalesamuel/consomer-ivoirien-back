@@ -26,11 +26,10 @@ class UpdateSouscriptionRequest extends FormRequest
         return [
             'titre' => 'required|string',
 			'description' => 'nullable|string',
-			'img_urls' => 'nullable|json',
 			'periode' => 'required|integer',
 			'prix' => 'required|integer',
 			'attributs' => 'nullable|json',
-			
+            'img' => 'nullable|image'
         ];
     }
 }

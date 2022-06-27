@@ -2,8 +2,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Utilisateur;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUtilisateurRequest;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Http\Requests\UpdateUtilisateurRequest;
 use Illuminate\Support\Str;
 
@@ -21,6 +24,15 @@ class UtilisateurController extends Controller
             'success' => true,
             'utilisateurs' => Utilisateur::where('id', '>', -1)
             ->orderBy('created_at', 'desc')->get()
+        ];
+
+        return response()->json($data);
+    }
+
+    public function posts(Request $request, Utilisateur $utilisateur) {
+        $data = [
+            'success' => true,
+            'posts' => $utilisateur->posts->sortByDesc('created_at')->values()->all()
         ];
 
         return response()->json($data);
@@ -70,6 +82,59 @@ class UtilisateurController extends Controller
         
         return response()->json($data);
     }
+
+    public function storePost(StorePostRequest $request)
+    {
+        $validated = $request->validated();
+        
+        if (!$this->user($request)) return;
+
+        $post = new Post;
+
+        $post->titre = $validated['titre'] ?? null;
+		$post->description = $validated['description'] ?? null;
+		$post->attributs = $validated['attributs'] ?? null;
+		$post->prix = $validated['prix'] ?? null;
+		$post->img_urls = $validated['img_urls'] ?? null;
+		$post->categorie_id = $validated['categorie_id'] ?? null;
+		$post->utilisateur_id = $utilisateur->id ?? null;
+		$post->promotion_end_date = $validated['promotion_end_date'] ?? null;
+		
+        $post->save();
+
+        $data = [
+            'success' => true,
+            'post'    => $post
+        ];
+        
+        return response()->json($data);
+    }
+
+    public function updatePost(UpdatePostRequest $request, Post $post)
+    {
+        $validated = $request->validated();
+        
+        if ($this->user($request)->id !== $post->utilisateur_id) 
+            throw new Exception("Non Authentifié", 1);
+        
+        $post->titre = $validated['titre'] ?? null;
+		$post->description = $validated['description'] ?? null;
+		$post->attributs = $validated['attributs'] ?? null;
+		$post->prix = $validated['prix'] ?? null;
+		$post->img_urls = $validated['img_urls'] ?? null;
+		$post->categorie_id = $validated['categorie_id'] ?? null;
+		$post->promotion_end_date = $validated['promotion_end_date'] ?? null;
+		
+        $post->save();
+
+        $data = [
+            'success' => true,
+            'post'    => $post
+        ];
+        
+        return response()->json($data);
+    }
+
 
     /**
      * Display the specified resource.
@@ -147,5 +212,29 @@ class UtilisateurController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function destroyPost(Request $request, Post $post)
+    {   
+        if ($this->user($request)->id !== $post->utilisateur_id) 
+            throw new Exception("Non Authentifié", 1);
+
+        $post->delete();
+
+        $data = [
+            'success' => true,
+            'post' => $post
+        ];
+
+        return response()->json($data);
+    }
+    
+    private function user(Request $request): Utilisateur
+    {
+        $token = $request->header('Authorization') ? 
+        explode(" ", $request->header('Authorization'))[1] : null;
+        $utilisateur = Utilisateur::where("api_token", $token)->firstOrFail();
+
+        return $utilisateur;
     }
 }

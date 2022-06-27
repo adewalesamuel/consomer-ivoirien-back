@@ -36,4 +36,14 @@ class Utilisateur extends Authenticatable
     public function setPasswordAttribute($value) {
         $this->attributes['password'] = Hash::make($value);
     }
+
+    /**
+     * Get all of the posts for the Utilisateur
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

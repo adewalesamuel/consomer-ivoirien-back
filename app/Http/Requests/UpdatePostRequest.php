@@ -30,7 +30,7 @@ class UpdatePostRequest extends FormRequest
 			'prix' => 'required|integer',
 			'img_urls' => 'nullable|json',
 			'categorie_id' => 'required|integer',
-			'utilisateur_id' => 'required|integer',
+			'utilisateur_id' => 'nullable|integer',
 			'promotion_end_date' => 'nullable|date',
 			
         ];
