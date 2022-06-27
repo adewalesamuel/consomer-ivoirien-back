@@ -28,7 +28,8 @@ class UpdateCategorieRequest extends FormRequest
 			'slug' => 'required|string',
 			'description' => 'nullable|string',
 			'img_url' => 'nullable|string',
-            'img' => 'nullable|file'
+            'img' => 'nullable|image',
+            'parent_category_id' => 'nullable|integer|exists:categories,id'
 			
         ];
     }
