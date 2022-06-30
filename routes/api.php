@@ -28,9 +28,10 @@ use App\Http\Controllers\ApiAuthController;
 |
 */
 
+
 Route::middleware('auth.api_token:user')->group(function () {
     Route::prefix('utilisateur')->group(function () {
-
+        
         Route::post('posts', [UtilisateurController::class, 'storePost']);
         Route::put('posts/{post}', [UtilisateurController::class, 'updatePost']);
         Route::delete('posts/{post}', [UtilisateurController::class, 'destroyPost']);
