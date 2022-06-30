@@ -91,7 +91,7 @@ class CategorieController extends Controller
 		$categorie->parent_category_id = $validated['parent_category_id'] ?? null;
 
         if ($request->hasFile('img'))
-            $categorie->img_url =  str_replace('public', 'storage', $request->img->store('public'));		
+            $categorie->img_url =  str_replace('public', 'storage', $request->img->store('storage', 'public'));		
         $categorie->save();
 
         $data = [
@@ -146,7 +146,7 @@ class CategorieController extends Controller
 		$categorie->parent_category_id = $validated['parent_category_id'] ?? null;
 
         if ($request->hasFile('img'))
-            $categorie->img_url =  str_replace('public', 'storage', $request->img->store('public'));		
+            $categorie->img_url =  str_replace('public', 'storage', $request->img->store('storage', 'public'));		
         $categorie->save();
 
         $data = [

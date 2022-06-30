@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Utilisateur;
+use App\Models\SouscriptionUtilisateur;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUtilisateurRequest;
@@ -9,6 +10,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Requests\UpdateUtilisateurRequest;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 
 class UtilisateurController extends Controller
@@ -71,7 +73,7 @@ class UtilisateurController extends Controller
 		
         if ($utilisateur->status) $utilisateur->status = $validated['status'] ?? null;
         if ($request->hasFile('img'))
-            $utilisateur->img_url =  str_replace('public', 'storage', $request->img->store('public'));        
+            $utilisateur->img_url =  str_replace('public', 'storage', $request->img->store('storage', 'public'));        
 
         $utilisateur->save();
 
@@ -86,8 +88,17 @@ class UtilisateurController extends Controller
     public function storePost(StorePostRequest $request)
     {
         $validated = $request->validated();
+
+        $user = $this->user($request);
         
-        if (!$this->user($request)) return;
+        if (!$user) return;
+
+        $souscription_utilisateur = SouscriptionUtilisateur::where('utilisateur_id', $user->id)
+        ->orderBy('created_at', 'desc')->firstOrFail();
+
+        if (!$this->isSouscripionValid($souscription_utilisateur))
+            throw new \Exception("Votre souscription n'est pas valide!", 1);
+            
 
         $post = new Post;
 
@@ -97,7 +108,7 @@ class UtilisateurController extends Controller
 		$post->prix = $validated['prix'] ?? null;
 		$post->img_urls = $validated['img_urls'] ?? null;
 		$post->categorie_id = $validated['categorie_id'] ?? null;
-		$post->utilisateur_id = $utilisateur->id ?? null;
+		$post->utilisateur_id = $user->id ?? null;
 		$post->promotion_end_date = $validated['promotion_end_date'] ?? null;
 		
         $post->save();
@@ -133,6 +144,16 @@ class UtilisateurController extends Controller
         ];
         
         return response()->json($data);
+    }
+
+    private function isSouscripionValid(SouscriptionUtilisateur $souscription_utilisateur): bool {
+        $current_datetime = Carbon::now();
+        $expiration_date = Carbon::create($souscription_utilisateur->created_at)
+        ->addMonth($souscription_utilisateur->souscription->periode);
+
+        $is_valid = ($current_datetime > $expiration_date) ? false : true;
+
+        return $is_valid;
     }
 
 
@@ -184,7 +205,7 @@ class UtilisateurController extends Controller
 		
         if ($utilisateur->status) $utilisateur->status = $validated['status'] ?? null;
 		if ($request->hasFile('img'))
-            $utilisateur->img_url =  str_replace('public', 'storage', $request->img->store('public'));
+            $utilisateur->img_url =  str_replace('public', 'storage', $request->img->store('storage', 'public'));
 
         $utilisateur->save();
 

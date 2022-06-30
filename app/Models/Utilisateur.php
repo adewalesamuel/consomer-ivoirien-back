@@ -46,4 +46,14 @@ class Utilisateur extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * Get all of the souscription_utilisateurs for the Utilisateur
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function souscription_utilisateurs()
+    {
+        return $this->hasMany(SouscriptionUtilisateur::class);
+    }
 }

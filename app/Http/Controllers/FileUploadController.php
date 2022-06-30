@@ -9,7 +9,7 @@ class FileUploadController extends Controller
 {
     public function store(StoreFileUploadRequest $request) {
         if ($request->hasFile('img')) {
-            $img_url =  str_replace('public', 'storage', $request->img->store('public'));
+            $img_url =  str_replace('public', 'storage', $request->img->store('storage', 'public'));
             $data = [
                 'success' => true,
                 'img_url' => $img_url

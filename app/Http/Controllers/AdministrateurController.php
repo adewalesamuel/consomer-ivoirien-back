@@ -55,7 +55,7 @@ class AdministrateurController extends Controller
 		$administrateur->img_url = $validated['img_url'] ?? null;
 
         if ($request->hasFile('img'))
-            $administrateur->img_url =  str_replace('public', 'storage', $request->img->store('public'));
+            $administrateur->img_url =  str_replace('public', 'storage', $request->img->store('storage', 'public'));
 		
         $administrateur->save();
 
@@ -111,7 +111,7 @@ class AdministrateurController extends Controller
 		$administrateur->role = $validated['role'] ?? null;
 
         if ($request->hasFile('img'))
-            $administrateur->img_url =  str_replace('public', 'storage', $request->img->store('public'));	
+            $administrateur->img_url =  str_replace('public', 'storage', $request->img->store('storage', 'public'));	
             	
         $administrateur->save();
 
